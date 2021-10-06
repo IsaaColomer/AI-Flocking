@@ -332,9 +332,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishPrefab: {fileID: 1529742295122646049, guid: 97a9e1218a0af6946b9c62e62b37af4c, type: 3}
-  numFish: 100
+  numFish: 500
   allFish: []
-  neighbourDistance: 1
+  neighbourDistance: 25
   speed: 3
   rotationSpeed: 5
   timeCount: 0
@@ -343,7 +343,7 @@ MonoBehaviour:
   lider: {fileID: 0}
   minSpeed: 2.41
   maxSpeed: 2.41
-  NeighbourDistance: 0.06
+  NeighbourDistance: 2.5
   RotationSpeed: 1.3
   acumulator: {fileID: 1803229076}
 --- !u!4 &821557417

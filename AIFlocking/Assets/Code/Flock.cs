@@ -24,6 +24,7 @@ public class Flock : MonoBehaviour
     {
         transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(direction),myManager.rotationSpeed * Time.deltaTime);
         transform.Translate(-(Time.deltaTime * speed),0.0f, 0.0f);
+        //direction = (Cohesion() + Align() + Separation()).normalized * speed;
         Hello();
     }
 
@@ -97,9 +98,9 @@ public class Flock : MonoBehaviour
     public void Hello()
     {
         timeCount -= Time.deltaTime;
-        if (timeCount <= 0)
+        if (timeCount < 0)
         {
-            direction = (Cohesion() + Align() + Separation()).normalized * speed;
+            direction = (Cohesion() + Align() + Separation()).normalized * speed*Time.deltaTime;
             timeCount = timeMax;
         }
     }
