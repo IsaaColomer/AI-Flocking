@@ -334,17 +334,17 @@ MonoBehaviour:
   fishPrefab: {fileID: 1529742295122646049, guid: 97a9e1218a0af6946b9c62e62b37af4c, type: 3}
   numFish: 100
   allFish: []
-  neighbourDistance: 2
-  speed: 7
+  neighbourDistance: 1
+  speed: 3
   rotationSpeed: 5
   timeCount: 0
-  timeMax: 3
+  timeMax: 1
   swimLimits: {x: 7, y: 7, z: 7}
   lider: {fileID: 0}
-  minSpeed: 1.63
+  minSpeed: 2.41
   maxSpeed: 2.41
-  NeighbourDistance: 2.93
-  RotationSpeed: 3.08
+  NeighbourDistance: 0.06
+  RotationSpeed: 1.3
   acumulator: {fileID: 1803229076}
 --- !u!4 &821557417
 Transform:

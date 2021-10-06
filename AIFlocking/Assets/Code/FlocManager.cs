@@ -59,16 +59,16 @@ public class FlocManager : MonoBehaviour
 
     void Recalculate()
     {
-        timeCount -= Time.deltaTime;
-        if(timeCount <= 0)
-        {
-            for (int i = 0; i < allFish.Length; i++)
-            {
-                allFish[i].GetComponent<Flock>().Hello();
-            }
+        //timeCount -= Time.deltaTime;
+        //if(timeCount <= 0)
+        //{
+        //    for (int i = 0; i < allFish.Length; i++)
+        //    {
+        //        allFish[i].GetComponent<Flock>().Hello();
+        //    }
 
-            timeCount = timeMax;
-        }
+        //    timeCount = timeMax;
+        //}
 
     }
 }

@@ -9,10 +9,14 @@ public class Flock : MonoBehaviour
     public Vector3 direction;
     public float speed;
 
+    public float timeCount;
+    public float timeMax;
+
     // Start is called before the first frame update
     void Start()
     {
 
+        timeCount = timeMax;
     }
 
     // Update is called once per frame
@@ -20,6 +24,7 @@ public class Flock : MonoBehaviour
     {
         transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(direction),myManager.rotationSpeed * Time.deltaTime);
         transform.Translate(-(Time.deltaTime * speed),0.0f, 0.0f);
+        Hello();
     }
 
     public Vector3 Cohesion()
@@ -91,6 +96,11 @@ public class Flock : MonoBehaviour
 
     public void Hello()
     {
-        direction = (Cohesion() + Align() + Separation()).normalized * speed;
+        timeCount -= Time.deltaTime;
+        if (timeCount <= 0)
+        {
+            direction = (Cohesion() + Align() + Separation()).normalized * speed;
+            timeCount = timeMax;
+        }
     }
 }
