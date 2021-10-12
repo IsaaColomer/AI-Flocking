@@ -8,6 +8,7 @@ public class FlocManager : MonoBehaviour
     [SerializeField] private GameObject fishPrefab;
     public int numFish;
 
+    public int distanceToCenter;
     [Header("Flock")]
     public GameObject[] allFish;
     public float neighbourDistance;
@@ -46,7 +47,6 @@ public class FlocManager : MonoBehaviour
             allFish[i].GetComponent<Flock>().myManager = this;
             allFish[i].GetComponent<Flock>().speed = speed;
         }
-
         timeCount = timeMax;
     }
 

@@ -332,7 +332,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishPrefab: {fileID: 1529742295122646049, guid: 97a9e1218a0af6946b9c62e62b37af4c, type: 3}
-  numFish: 100
+  numFish: 50
+  distanceToCenter: 5
   allFish: []
   neighbourDistance: 40
   speed: 3
