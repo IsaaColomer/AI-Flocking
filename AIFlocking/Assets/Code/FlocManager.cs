@@ -7,9 +7,8 @@ public class FlocManager : MonoBehaviour
     [Header("Flock Manager")]
     [SerializeField] private GameObject fishPrefab;
     public int numFish;
-    public GameObject Cyl;
+    public int limit;
 
-    public int distanceToCenter;
     [Header("Flock")]
     public GameObject[] allFish;
     public float neighbourDistance;
@@ -57,7 +56,7 @@ public class FlocManager : MonoBehaviour
     {
         //Recalculate();
 
-        Hello();
+        //Hello();
     }
 
     void Recalculate()

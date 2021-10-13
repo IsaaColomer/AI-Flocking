@@ -7,41 +7,28 @@ public class Flock : MonoBehaviour
     public FlocManager myManager;
     public Vector3 direction;
     public float speed;
-    private float lowSpeed;
-    private float highSpeed;
+    public bool can;
     public float timeCount;
     public float timeMax;
-    public Vector3 d;
-
     // Start is called before the first frame update
     void Start()
     {
         timeCount = timeMax;
-        lowSpeed = speed / 2;
-        highSpeed = speed;
     }
-
-    // Update is called once per frame
+        // Update is called once per frame
     void Update()
     {
-        Bounds b = new Bounds(myManager.transform.position, myManager.Cyl.transform.position);
-        if (!b.Contains(transform.position))
+        if((myManager.transform.position - transform.position).magnitude >= myManager.limit)
         {
-            Debug.Log("If");
-            direction = (myManager.transform.position-transform.position).normalized;
-            
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
-
-            speed = lowSpeed;
+            direction = (myManager.transform.position - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * 1500000 * Time.deltaTime);
         }
         else
         {
-            Debug.Log("Else");
             direction = (Cohesion() + Align() + Separation()).normalized * speed;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
-            speed = highSpeed;
         }
-        transform.Translate(-(Time.deltaTime * speed), 0.0f, 0.0f);
+        transform.Translate((Time.deltaTime * speed), 0.0f, 0.0f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
         Debug.Log((transform.position - myManager.transform.position).magnitude);
     }
     public Vector3 Cohesion()
@@ -105,7 +92,6 @@ public class Flock : MonoBehaviour
                                   (distance * distance);
             }
         }
-
         return separation;
     }
 
