@@ -235,9 +235,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1dce60c2bd35c489c91cdba9f5e2ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fishPrefab: {fileID: 1529742295122646049, guid: 97a9e1218a0af6946b9c62e62b37af4c, type: 3}
+  fishPrefab: {fileID: 5542792641451081257, guid: 167f8c077a2f3164cbbf8829b5ff0820, type: 3}
   numFish: 50
-  limit: 10
+  limit: 6
   allFish: []
   neighbourDistance: 40
   speed: 2
@@ -245,7 +245,7 @@ MonoBehaviour:
   timeCount: 0
   timeMax: 3
   swimLimits: {x: 5, y: 5, z: 5}
-  lider: {fileID: 0}
+  lider: {fileID: 821557415}
   minSpeed: 2.2
   maxSpeed: 2.43
   NeighbourDistance: 2.71
