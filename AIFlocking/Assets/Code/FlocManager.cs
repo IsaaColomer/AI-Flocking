@@ -7,6 +7,7 @@ public class FlocManager : MonoBehaviour
     [Header("Flock Manager")]
     [SerializeField] private GameObject fishPrefab;
     public int numFish;
+    public GameObject Cyl;
 
     public int distanceToCenter;
     [Header("Flock")]
@@ -40,12 +41,13 @@ public class FlocManager : MonoBehaviour
     void Start()
     {
         allFish = new GameObject[numFish];
-        for (int i = 0; i < numFish; ++i) {
+        for (int i = 0; i < numFish; ++i)
+        {
             Vector3 pos = this.transform.position + new Vector3(Random.Range(0, swimLimits.x)- swimLimits.x/2, Random.Range(0, swimLimits.y)- swimLimits.y/2, Random.Range(0, swimLimits.z)- swimLimits.z/2); // random position
             Vector3 randomize = new Vector3(Random.Range(1,2), Random.Range(1,2), Random.Range(1,2)).normalized; // random vector direction
             allFish[i] = (GameObject)Instantiate(fishPrefab, pos, Quaternion.LookRotation(randomize),acumulator.transform);
             allFish[i].GetComponent<Flock>().myManager = this;
-            allFish[i].GetComponent<Flock>().speed = speed;
+
         }
         timeCount = timeMax;
     }
@@ -54,6 +56,8 @@ public class FlocManager : MonoBehaviour
     void Update()
     {
         //Recalculate();
+
+        Hello();
     }
 
     void Recalculate()
@@ -61,6 +65,22 @@ public class FlocManager : MonoBehaviour
 
     }
 
+    public void Hello()
+    {
+        timeCount -= Time.deltaTime;
+        if (timeCount < 0)
+        {
+            for(int i = 0; i< allFish.Length; i++)
+            {
+                allFish[i].GetComponent<Flock>().speed = speed;
+
+            }
+                
+
+
+            timeCount = timeMax;
+        }
+    }
     //public GameObject fishPrefab;
     //public int numFish = 20;
     //public GameObject[] allFish;

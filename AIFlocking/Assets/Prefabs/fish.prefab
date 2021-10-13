@@ -97,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myManager: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
-  speed: 0
+  speed: 3
   timeCount: 0
   timeMax: 2
+  d: {x: 0, y: 0, z: 0}

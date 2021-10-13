@@ -7,33 +7,43 @@ public class Flock : MonoBehaviour
     public FlocManager myManager;
     public Vector3 direction;
     public float speed;
+    private float lowSpeed;
+    private float highSpeed;
     public float timeCount;
     public float timeMax;
     public Vector3 d;
+
     // Start is called before the first frame update
     void Start()
     {
         timeCount = timeMax;
+        lowSpeed = speed / 2;
+        highSpeed = speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(-(Time.deltaTime * speed), 0.0f, 0.0f);
-
-        if (Vector3.Distance(transform.position, Vector3.zero) >= myManager.distanceToCenter)
+        Bounds b = new Bounds(myManager.transform.position, myManager.Cyl.transform.position);
+        if (!b.Contains(transform.position))
         {
-            Vector3 directionD = Vector3.zero - transform.position;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(directionD), myManager.rotationSpeed * Time.deltaTime);
+            Debug.Log("If");
+            direction = (myManager.transform.position-transform.position).normalized;
+            
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
+
+            speed = lowSpeed;
         }
         else
         {
+            Debug.Log("Else");
             direction = (Cohesion() + Align() + Separation()).normalized * speed;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
+            speed = highSpeed;
         }
-
+        transform.Translate(-(Time.deltaTime * speed), 0.0f, 0.0f);
         Debug.Log((transform.position - myManager.transform.position).magnitude);
     }
-
     public Vector3 Cohesion()
     {
         Vector3 cohesion = Vector3.zero;
@@ -98,18 +108,7 @@ public class Flock : MonoBehaviour
 
         return separation;
     }
-    public void Hello()
-    {
-        timeCount -= Time.deltaTime;
-        if (timeCount < 0)
-        {
-            foreach (GameObject go in myManager.allFish)
-            {
-                direction = (Cohesion() + Align() + Separation()).normalized * speed;
-            }
-            timeCount = timeMax;
-        }
-    }
+
 
     //public FlocManager myManager;
     //float speed;
