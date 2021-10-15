@@ -5,7 +5,9 @@ using UnityEngine;
 public class Flock : MonoBehaviour
 {
     public FlocManager myManager;
+    public ROtateARound sphere;
     public Vector3 direction;
+    public float yPos;
     public float speed;
     public bool can;
     public float timeCount;
@@ -18,18 +20,28 @@ public class Flock : MonoBehaviour
         // Update is called once per frame
     void Update()
     {
-        if((myManager.transform.position - transform.position).magnitude >= myManager.limit)
+        if ((myManager.transform.position - transform.position).magnitude >= myManager.limit)
         {
-            direction = (myManager.transform.position - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * 1500000 * Time.deltaTime);
+            can = true;
         }
         else
         {
-            direction = (Cohesion() + Align() + Separation()).normalized * speed;
+            can = false;
         }
-        transform.Translate((Time.deltaTime * speed), 0.0f, 0.0f);
+        if(can)
+            direction = (-(transform.right - (myManager.transform.position - transform.position)));
+        else
+        {
+            direction = ((Cohesion() + Align() + Separation()).normalized * speed);
+        }
+
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
+        transform.Translate((Time.deltaTime * speed), 0.0f, 0.0f);
+
         Debug.Log((transform.position - myManager.transform.position).magnitude);
+    }
+    void Lol()
+    { 
     }
     public Vector3 Cohesion()
     {
@@ -93,6 +105,14 @@ public class Flock : MonoBehaviour
             }
         }
         return separation;
+    }
+
+    void Evade()
+    {
+        Vector3 targetDir = transform.position - (ROtateARound.instance.transform.position - transform.position);
+        //myManager.sphereLimit = targetDir.magnitude;
+        float lookAhead = targetDir.magnitude / speed;
+        transform.position = (-ROtateARound.instance.transform.position - ROtateARound.instance.transform.forward * lookAhead);
     }
 
 
