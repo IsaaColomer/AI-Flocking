@@ -29,7 +29,22 @@ public class Flock : MonoBehaviour
             can = false;
         }
         if(can)
+        { 
             direction = (-(transform.right - (myManager.transform.position - transform.position)));
+            if(transform.position.y > 0)
+            {
+                float lols = 0;
+                lols += 0.01f;
+                direction = direction + new Vector3(0, transform.position.y + lols, 0);
+            }
+            else
+            {
+                float lols = 0;
+                lols += 0.01f;
+                direction = direction + new Vector3(0, transform.position.y - lols, 0);
+            }
+
+        }
         else
         {
             direction = ((Cohesion() + Align() + Separation()).normalized * speed);
@@ -39,9 +54,6 @@ public class Flock : MonoBehaviour
         transform.Translate((Time.deltaTime * speed), 0.0f, 0.0f);
 
         Debug.Log((transform.position - myManager.transform.position).magnitude);
-    }
-    void Lol()
-    { 
     }
     public Vector3 Cohesion()
     {
