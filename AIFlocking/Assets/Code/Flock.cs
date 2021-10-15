@@ -12,10 +12,12 @@ public class Flock : MonoBehaviour
     public bool can;
     public float timeCount;
     public float timeMax;
+    private LineRenderer lr;
     // Start is called before the first frame update
     void Start()
     {
         can = false;
+        lr = GetComponent<LineRenderer>();
         timeCount = timeMax;
     }
         // Update is called once per frame
@@ -33,9 +35,10 @@ public class Flock : MonoBehaviour
         }
         else
         {
-            direction = ((Cohesion() + Align() + Separation()).normalized * speed);
+            direction = ((Cohesion() + Align() + Separation()).normalized * (speed*1.3f));
         }
-
+        lr.SetPosition(0, transform.position);
+        lr.SetPosition(1, myManager.transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
         transform.Translate((Time.deltaTime * speed), 0.0f, 0.0f);
 
