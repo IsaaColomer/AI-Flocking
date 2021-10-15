@@ -15,6 +15,7 @@ public class Flock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        can = false;
         timeCount = timeMax;
     }
         // Update is called once per frame
@@ -24,26 +25,11 @@ public class Flock : MonoBehaviour
         {
             can = true;
         }
-        else
-        {
+        if ((myManager.transform.position - transform.position).magnitude <= myManager.limitMin)
             can = false;
-        }
         if(can)
         { 
             direction = (-(transform.right - (myManager.transform.position - transform.position)));
-            if(transform.position.y > 0)
-            {
-                float lols = 0;
-                lols += 0.01f;
-                direction = direction + new Vector3(0, transform.position.y + lols, 0);
-            }
-            else
-            {
-                float lols = 0;
-                lols += 0.01f;
-                direction = direction + new Vector3(0, transform.position.y - lols, 0);
-            }
-
         }
         else
         {
