@@ -9,30 +9,21 @@ public class Flock : MonoBehaviour
     public Vector3 direction;
     public static Flock instance;
     public float speed;
-
+    public float freq = 0f;
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
     }
         // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        if ((myManager.transform.position - transform.position).magnitude > myManager.limit)
+        freq += Time.deltaTime;
+        if (freq > 0.1)
         {
-            can = true;
-        }
-        if ((myManager.transform.position - transform.position).magnitude < myManager.limitMin)
-        {
-            can = false;
-        }
-        if(can)
-        {
-            direction = (-(transform.right - (myManager.transform.position - transform.position)));
-        }
-        else
-        {
-            direction = ((Cohesion() + Align() + Separation()).normalized * (speed*1.3f));
+            freq -= 0.1f;
+            //ChageTheDirectionOfTheFish();
+            direction = Lol();
         }
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
         transform.Translate((Time.deltaTime * speed), 0.0f, 0.0f);
@@ -100,77 +91,21 @@ public class Flock : MonoBehaviour
         }
         return separation;
     }
-
-    void Evade()
+    public void ChangeSpeed(float speds)
     {
-        Vector3 targetDir = transform.position - (ROtateARound.instance.transform.position - transform.position);
-        //myManager.sphereLimit = targetDir.magnitude;
-        float lookAhead = targetDir.magnitude / speed;
-        transform.position = (-ROtateARound.instance.transform.position - ROtateARound.instance.transform.forward * lookAhead);
+        speed = speds;
     }
-
-
-    //public FlocManager myManager;
-    //float speed;
-
-    //// Use this for initialization
-    //void Start()
-    //{
-    //    speed = Random.Range(myManager.minSpeed,
-    //                            myManager.maxSpeed);
-
-    //}
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    transform.Translate(-Time.deltaTime * speed, 0, 0);
-    //    ApplyRules();
-
-    //}
-    //void ApplyRules()
-    //{
-    //    GameObject[] gos;
-    //    gos = myManager.allFish;
-
-    //    Vector3 vcentre = Vector3.zero;
-    //    Vector3 vavoid = Vector3.zero;
-    //    float gSpeed = 0.01f;
-    //    float nDistance;
-    //    int groupSize = 0;
-
-    //    foreach (GameObject go in gos)
-    //    {
-    //        if (go != this.gameObject)
-    //        {
-    //            nDistance = Vector3.Distance(go.transform.position, this.transform.position);
-    //            if (nDistance <= myManager.neighbourDistance)
-    //            {
-    //                vcentre += go.transform.position;
-    //                groupSize++;
-
-    //                if (nDistance < 1.0f)
-    //                {
-    //                    vavoid = vavoid + (this.transform.position - go.transform.position);
-    //                }
-
-    //                Flock anotherFlock = go.GetComponent<Flock>();
-    //                gSpeed = gSpeed + anotherFlock.speed;
-    //            }
-    //        }
-    //    }
-
-    //    if (groupSize > 0)
-    //    {
-    //        vcentre = vcentre / groupSize;
-    //        speed = gSpeed / groupSize;
-
-    //        Vector3 direction = (vcentre + vavoid) - transform.position;
-    //        if (direction != Vector3.zero)
-    //            transform.rotation = Quaternion.Slerp(transform.rotation,
-    //                                                  Quaternion.LookRotation(direction),
-    //                                                  myManager.rotationSpeed * Time.deltaTime);
-
-    //    }
-    //}
+    public Vector3 Lol()
+    {
+        Vector3 xd = Vector3.zero;
+        if ((myManager.transform.position - transform.position).magnitude > myManager.limit)
+        {
+            xd = (-(transform.right - (myManager.transform.position - transform.position)));
+        }
+        else
+        {
+            xd = ((Cohesion() + Align() + Separation()).normalized * (speed));
+        }
+        return xd;
+    }
 }

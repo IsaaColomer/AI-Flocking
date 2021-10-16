@@ -8,6 +8,7 @@ public class FlocManager : MonoBehaviour
     [Header("Flock Manager")]
     [SerializeField] private GameObject fishPrefab;
     public int numFish;
+    [Range(1f, 10f)]
     public int limit;
     public int limitMin;
     [Header("Flock")]
@@ -15,12 +16,6 @@ public class FlocManager : MonoBehaviour
     public float neighbourDistance;
     public float speed;
     public float rotationSpeed;
-    public float distanceToShark;
-    public bool evading;
-
-    [Header("Timer")]
-    public float timeCount;
-    public float timeMax;
 
     public Vector3 swimLimits;
     bool bounded;
@@ -28,7 +23,6 @@ public class FlocManager : MonoBehaviour
     bool followLider;
     [SerializeField] GameObject lider;
 
-    public float[] yPos;
     [Range(0f, 5f)]
     public float minSpeed;
     [Range(0f, 5f)]
@@ -50,12 +44,15 @@ public class FlocManager : MonoBehaviour
             allFish[i] = (GameObject)Instantiate(fishPrefab, pos, Quaternion.LookRotation(randomize), acumulator.transform);
             allFish[i].GetComponent<Flock>().myManager = this;
         }
-        timeCount = timeMax;
     }
 
     // Update is called once per frame
     void Update()
     {
-        speed = Flock.instance.speed;
+        for (int i = 0; i < numFish; ++i)
+        {
+            speed = Flock.instance.speed;
+        }        
     }
+
 }
