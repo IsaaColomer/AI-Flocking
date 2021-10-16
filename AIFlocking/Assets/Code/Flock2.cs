@@ -63,9 +63,7 @@ public class Flock2 : MonoBehaviour
             default:
                 break;
         }
-
-        transform.Translate(0, 0, (Time.deltaTime * speed));
-
+        transform.Translate(0, 0, -(Time.deltaTime * speed));
     }
 
 

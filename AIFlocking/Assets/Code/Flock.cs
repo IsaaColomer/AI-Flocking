@@ -5,55 +5,28 @@ using UnityEngine;
 public class Flock : MonoBehaviour
 {
     public FlocManager myManager;
-    public ROtateARound sphere;
     public Vector3 direction;
-    public float yPos;
+    public static Flock instance;
     public float speed;
-    public bool can;
-    public float timeCount;
-    public float timeMax;
+
     // Start is called before the first frame update
     void Start()
     {
-        timeCount = timeMax;
+        instance = this;
     }
         // Update is called once per frame
     void Update()
     {
-        if ((myManager.transform.position - transform.position).magnitude >= myManager.limit)
+        if ((myManager.transform.position - transform.position).magnitude > myManager.limit)
         {
-            can = true;
-        }
-        else
-        {
-            can = false;
-        }
-        if(can)
-        { 
-            direction = (-(transform.right - (myManager.transform.position - transform.position)));
-            if(transform.position.y > 0)
-            {
-                float lols = 0;
-                lols += 0.01f;
-                direction = direction + new Vector3(0, transform.position.y + lols, 0);
-            }
-            else
-            {
-                float lols = 0;
-                lols += 0.01f;
-                direction = direction + new Vector3(0, transform.position.y - lols, 0);
-            }
-
+            direction = -((transform.right - (myManager.transform.position - transform.position)));
         }
         else
         {
             direction = ((Cohesion() + Align() + Separation()).normalized * speed);
         }
-
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
         transform.Translate((Time.deltaTime * speed), 0.0f, 0.0f);
-
-        Debug.Log((transform.position - myManager.transform.position).magnitude);
     }
     public Vector3 Cohesion()
     {
