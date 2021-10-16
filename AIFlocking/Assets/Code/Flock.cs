@@ -95,17 +95,17 @@ public class Flock : MonoBehaviour
     {
         speed = speds;
     }
-    public Vector3 Lol()
+    public Vector3 RecalcuateDirection()
     {
-        Vector3 xd = Vector3.zero;
+        Vector3 newDistance = Vector3.zero;
         if ((myManager.transform.position - transform.position).magnitude > myManager.limit)
         {
-            xd = (-(transform.right - (myManager.transform.position - transform.position)));
+            newDistance = (-(transform.right - (myManager.transform.position - transform.position)));
         }
         else
         {
-            xd = ((Cohesion() + Align() + Separation()).normalized * (speed));
+            newDistance = ((Cohesion() + Align() + Separation()).normalized * (speed));
         }
-        return xd;
+        return newDistance;
     }
 }
