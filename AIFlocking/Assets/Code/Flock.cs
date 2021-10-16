@@ -44,7 +44,11 @@ public class Flock : MonoBehaviour
         }
         else
         {
-            direction = (-(transform.right - (myManager.transform.position - transform.position)));
+            direction = Vector3.zero;
+            transform.rotation = Quaternion.identity;
+            transform.LookAt(myManager.transform.position);
+            transform.position = Vector3.MoveTowards(transform.position, myManager.transform.position, speed);
+            //direction = (-(transform.right - (myManager.transform.position - transform.position)));
         }
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
         lr.SetPosition(0, transform.position);
