@@ -9,7 +9,6 @@ public class FlocManager : MonoBehaviour
     [SerializeField] private GameObject fishPrefab;
     public int numFish;
     public int limit;
-    public int limitMin;
     public float initialY;
     public float sphereLimit;
     public GameObject wanderer;

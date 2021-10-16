@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -306,12 +306,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishPrefab: {fileID: 5542792641451081257, guid: 167f8c077a2f3164cbbf8829b5ff0820, type: 3}
   numFish: 50
-  limit: 6
-  limitMin: 4
+  limit: 4
   initialY: 0
   sphereLimit: 1
   allFish: []
-  neighbourDistance: 40
+  neighbourDistance: 400
   speed: 2
   rotationSpeed: 4
   timeCount: 0

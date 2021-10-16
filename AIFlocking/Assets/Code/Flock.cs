@@ -17,8 +17,11 @@ public class Flock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+<<<<<<< HEAD
         can = false;
         lr = GetComponent<LineRenderer>();
+=======
+>>>>>>> parent of 6f632ac (Working)
         timeCount = timeMax;
         instance = this;
     }
@@ -27,6 +30,7 @@ public class Flock : MonoBehaviour
     {
         if(!myManager.evading)
         {
+<<<<<<< HEAD
             if ((myManager.transform.position - transform.position).magnitude >= myManager.limit)
             {
                 can = true;
@@ -41,6 +45,30 @@ public class Flock : MonoBehaviour
             {
                 direction = ((Cohesion() + Align() + Separation()).normalized * (speed * 1.3f));
             }
+=======
+            can = true;
+        }
+        else
+        {
+            can = false;
+        }
+        if(can)
+        { 
+            direction = (-(transform.right - (myManager.transform.position - transform.position)));
+            if(transform.position.y > 0)
+            {
+                float lols = 0;
+                lols += 0.01f;
+                direction = direction + new Vector3(0, transform.position.y + lols, 0);
+            }
+            else
+            {
+                float lols = 0;
+                lols += 0.01f;
+                direction = direction + new Vector3(0, transform.position.y - lols, 0);
+            }
+
+>>>>>>> parent of 6f632ac (Working)
         }
         else
         {
