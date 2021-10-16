@@ -6,6 +6,7 @@ public class Flock : MonoBehaviour
 {
     public FlocManager myManager;
     public ROtateARound sphere;
+    public static Flock instance;
     public Vector3 direction;
     public float yPos;
     public float speed;
@@ -19,30 +20,36 @@ public class Flock : MonoBehaviour
         can = false;
         lr = GetComponent<LineRenderer>();
         timeCount = timeMax;
+        instance = this;
     }
         // Update is called once per frame
     void Update()
     {
-        if ((myManager.transform.position - transform.position).magnitude >= myManager.limit)
+        if(!myManager.evading)
         {
-            can = true;
-        }
-        if ((myManager.transform.position - transform.position).magnitude <= myManager.limitMin)
-            can = false;
-        if(can)
-        { 
-            direction = (-(transform.right - (myManager.transform.position - transform.position)));
+            if ((myManager.transform.position - transform.position).magnitude >= myManager.limit)
+            {
+                can = true;
+            }
+            if ((myManager.transform.position - transform.position).magnitude <= myManager.limitMin)
+                can = false;
+            if (can)
+            {
+                direction = (-(transform.right - (myManager.transform.position - transform.position)));
+            }
+            else
+            {
+                direction = ((Cohesion() + Align() + Separation()).normalized * (speed * 1.3f));
+            }
         }
         else
         {
-            direction = ((Cohesion() + Align() + Separation()).normalized * (speed*1.3f));
+            direction = (-(transform.right - (myManager.transform.position - transform.position)));
         }
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
         lr.SetPosition(0, transform.position);
         lr.SetPosition(1, myManager.transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
         transform.Translate((Time.deltaTime * speed), 0.0f, 0.0f);
-
-        Debug.Log((transform.position - myManager.transform.position).magnitude);
     }
     public Vector3 Cohesion()
     {

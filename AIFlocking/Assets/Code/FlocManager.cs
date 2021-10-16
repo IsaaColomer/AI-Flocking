@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class FlocManager : MonoBehaviour
 {
@@ -11,12 +12,14 @@ public class FlocManager : MonoBehaviour
     public int limitMin;
     public float initialY;
     public float sphereLimit;
-
+    public GameObject wanderer;
     [Header("Flock")]
     public GameObject[] allFish;
     public float neighbourDistance;
     public float speed;
     public float rotationSpeed;
+    public float distanceToShark;
+    public bool evading;
 
     [Header("Timer")]
     public float timeCount;
@@ -38,6 +41,7 @@ public class FlocManager : MonoBehaviour
     [Range(0f, 5f)]
     public float RotationSpeed;
 
+    private NavMeshAgent agent;
     public GameObject acumulator;
 
     // Start is called before the first frame update
@@ -49,40 +53,41 @@ public class FlocManager : MonoBehaviour
         {
             Vector3 pos = this.transform.position + new Vector3(Random.Range(0, swimLimits.x)- swimLimits.x/2, Random.Range(0, swimLimits.y)- swimLimits.y/2, Random.Range(0, swimLimits.z)- swimLimits.z/2); // random position
             Vector3 randomize = new Vector3(Random.Range(1,2), Random.Range(1,2), Random.Range(1,2)).normalized; // random vector direction
-            allFish[i] = (GameObject)Instantiate(fishPrefab, pos, Quaternion.LookRotation(randomize),acumulator.transform);
+            allFish[i] = (GameObject)Instantiate(fishPrefab, pos, Quaternion.LookRotation(randomize), acumulator.transform);
             yPos[i] = allFish[i].transform.position.y;
             allFish[i].GetComponent<Flock>().myManager = this;
         }
+        agent = GetComponent<NavMeshAgent>();
         timeCount = timeMax;
+        wanderer = GameObject.FindGameObjectWithTag("Shark");
     }
 
     // Update is called once per frame
     void Update()
     {
+        speed = Flock.instance.speed;
         //Recalculate();
-
+        Evade();
         //Hello();
+        Debug.Log((fShark.instance.transform.position - transform.position).magnitude);
     }
 
     void Recalculate()
     {
 
     }
-
-    public void Hello()
+    void Evade()
     {
-        timeCount -= Time.deltaTime;
-        if (timeCount < 0)
+        if((fShark.instance.transform.position - transform.position).magnitude <= distanceToShark)
         {
-            for(int i = 0; i< allFish.Length; i++)
-            {
-                allFish[i].GetComponent<Flock>().speed = speed;
-
-            }
-                
-
-
-            timeCount = timeMax;
+            evading = true;
+            Vector3 targetDir = transform.position - (wanderer.transform.position - transform.position);
+            float lookAhead = targetDir.magnitude / agent.speed;
+            agent.destination = (-wanderer.transform.position - wanderer.transform.forward * lookAhead);
+        }
+        else
+        {
+            evading = false;
         }
     }
     //public GameObject fishPrefab;
