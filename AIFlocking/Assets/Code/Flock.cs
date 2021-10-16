@@ -5,6 +5,7 @@ using UnityEngine;
 public class Flock : MonoBehaviour
 {
     public FlocManager myManager;
+    public bool can;
     public Vector3 direction;
     public static Flock instance;
     public float speed;
@@ -19,11 +20,19 @@ public class Flock : MonoBehaviour
     {
         if ((myManager.transform.position - transform.position).magnitude > myManager.limit)
         {
-            direction = -((transform.right - (myManager.transform.position - transform.position)));
+            can = true;
+        }
+        if ((myManager.transform.position - transform.position).magnitude < myManager.limitMin)
+        {
+            can = false;
+        }
+        if(can)
+        {
+            direction = (-(transform.right - (myManager.transform.position - transform.position)));
         }
         else
         {
-            direction = ((Cohesion() + Align() + Separation()).normalized * speed);
+            direction = ((Cohesion() + Align() + Separation()).normalized * (speed*1.3f));
         }
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), myManager.rotationSpeed * Time.deltaTime);
         transform.Translate((Time.deltaTime * speed), 0.0f, 0.0f);

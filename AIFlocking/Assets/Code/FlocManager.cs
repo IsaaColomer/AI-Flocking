@@ -10,8 +10,6 @@ public class FlocManager : MonoBehaviour
     public int numFish;
     public int limit;
     public int limitMin;
-    public float initialY;
-    public float sphereLimit;
     [Header("Flock")]
     public GameObject[] allFish;
     public float neighbourDistance;
